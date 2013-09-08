@@ -329,7 +329,7 @@ class SchoolController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $schools = $em->getRepository('AtkRegistrationBundle:School')->findAll();
+        $schools = $em->getRepository('AtkRegistrationBundle:School')->findBy(array(), array('name' => 'ASC'));
        
         if (!$schools) {
             throw $this->createNotFoundException('Unable to find School entity.');

@@ -1,16 +1,26 @@
 {% extends '::base.html.twig' %}
 {% block content %}
 <div class='row'>
-  <div class='span4'>
-    <h1>{{ event.name }} - <a href='{{ path('school', { 'name': event.school }) }}'>{{ event.school }}</a></h1>
+    <div class="span4">
+        <h1>{{ event.school }}</h1>
+        <p><a href='{{ path('school', { 'name': event.school }) }}'>See all {{ event.school }} events</a></p>
+    </div>
+  <div class='span8'>
+    <h3>{{ event.name }}</h3>
 
     <p>{{ event.description }}</p>
 
-  </div>
-  <div class='span6'>
     <p><b>Location:</b> {{ event.location }}</p>
 
     <p><b>Contact:</b> <a href='mailto:{{ event.contactEmail }}?subject={{ event.name }} - {{ event.school }}'>{{ event.contactName}}</a></p>
+
+    <h4>Dates</h4>
+    <ul>
+    {% for date in eventDates %}
+        <li><a href='{{ path('eventdate', { 'id': date.id }) }}'>{{ date.eventdate.format('l, F d Y') }}</a></li>
+    {% endfor %}
+    </ul>
+
   </div>
 </div>
 

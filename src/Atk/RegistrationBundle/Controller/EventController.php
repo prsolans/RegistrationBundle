@@ -295,8 +295,31 @@ class EventController extends Controller
         ;
     }
 
+     /**
+     * Display all events at a given School.
+     *
+     * @Route("/school/{name}", name="school")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getSchoolEventAction($name)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $thisSchool = $em->getRepository('AtkRegistrationBundle:School')->findOneByName($name);
+        $schoolId = $thisSchool->getId();
+
+        $events = $em->getRepository('AtkRegistrationBundle:Event')->findById($schoolId);
+
+        if (!$thisSchool) {
+            throw $this->createNotFoundException('Unable to find School entity.');
+        }
+   
+        return $this->render('AtkRegistrationBundle:School:school.html.twig', array('school' => $thisSchool, 'events' => $events));
+    }   
+
     /**
-     * Display all Event records.
+     * Display specific Event details.
      *
      * @Route("/event/{id}", name="event")
      * @Method("GET")
@@ -307,11 +330,14 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $thisEvent = $em->getRepository('AtkRegistrationBundle:Event')->findOneById($id);
+        $eventId = $thisEvent->getId();
+
+        $eventDates = $em->getRepository('AtkRegistrationBundle:EventDate')->findByEvent($eventId);
       
         if (!$thisEvent) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
    
-        return $this->render('AtkRegistrationBundle:Event:event.html.twig', array('event' => $thisEvent));
+        return $this->render('AtkRegistrationBundle:Event:event.html.twig', array('event' => $thisEvent, 'eventDates' => $eventDates));
     }
 }

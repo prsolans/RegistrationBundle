@@ -18,14 +18,14 @@ use Atk\RegistrationBundle\Form\EventDateFilterType;
 /**
  * EventDate controller.
  *
- * @Route("/admin/eventdate")
+ * @Route("")
  */
 class EventDateController extends Controller
 {
     /**
      * Lists all EventDate entities.
      *
-     * @Route("/", name="admin_eventdate")
+     * @Route("/admin/eventdate", name="admin_eventdate")
      * @Method("GET")
      * @Template()
      */
@@ -118,7 +118,7 @@ class EventDateController extends Controller
     /**
      * Creates a new EventDate entity.
      *
-     * @Route("/", name="admin_eventdate_create")
+     * @Route("/admin/eventdate", name="admin_eventdate_create")
      * @Method("POST")
      * @Template("AtkRegistrationBundle:EventDate:new.html.twig")
      */
@@ -146,7 +146,7 @@ class EventDateController extends Controller
     /**
      * Displays a form to create a new EventDate entity.
      *
-     * @Route("/new", name="admin_eventdate_new")
+     * @Route("/admin/eventdate/new", name="admin_eventdate_new")
      * @Method("GET")
      * @Template()
      */
@@ -164,7 +164,7 @@ class EventDateController extends Controller
     /**
      * Finds and displays a EventDate entity.
      *
-     * @Route("/{id}", name="admin_eventdate_show")
+     * @Route("/admin/eventdate/{id}", name="admin_eventdate_show")
      * @Method("GET")
      * @Template()
      */
@@ -189,7 +189,7 @@ class EventDateController extends Controller
     /**
      * Displays a form to edit an existing EventDate entity.
      *
-     * @Route("/{id}/edit", name="admin_eventdate_edit")
+     * @Route("/admin/eventdate/{id}/edit", name="admin_eventdate_edit")
      * @Method("GET")
      * @Template()
      */
@@ -216,7 +216,7 @@ class EventDateController extends Controller
     /**
      * Edits an existing EventDate entity.
      *
-     * @Route("/{id}", name="admin_eventdate_update")
+     * @Route("/admin/eventdate/{id}", name="admin_eventdate_update")
      * @Method("PUT")
      * @Template("AtkRegistrationBundle:EventDate:edit.html.twig")
      */
@@ -254,7 +254,7 @@ class EventDateController extends Controller
     /**
      * Deletes a EventDate entity.
      *
-     * @Route("/{id}", name="admin_eventdate_delete")
+     * @Route("/admin/eventdate/{id}", name="admin_eventdate_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -293,5 +293,45 @@ class EventDateController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Display specific EventDate details.
+     *
+     * @Route("/eventdate/{id}", name="eventdate")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($id);
+      
+        if (!$thisEventDate) {
+            throw $this->createNotFoundException('Unable to find Event entity.');
+        }
+   
+        return $this->render('AtkRegistrationBundle:EventDate:eventdate.html.twig', array('eventdate' => $thisEventDate));
+    }
+
+    /**
+     * Display all EventDate records.
+     *
+     * @Route("/eventdate", name="alleventdates")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAllAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findAll();
+      
+        if (!$thisEventDate) {
+            throw $this->createNotFoundException('Unable to find EventDate entity.');
+        }
+   
+        return $this->render('AtkRegistrationBundle:EventDate:eventdate.html.twig', array('eventdate' => $thisEventDate));
     }
 }

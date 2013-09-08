@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class='row'>
+    <div class="span4">
+    <h1>{{ eventdate.event.school.name }}<br/><small>{{ eventdate.event.name }}</small></h1>
+    <p><a href='{{ path('event', { 'id': eventdate.event.id }) }}'>See all dates at this event</a></p>
+         </div>
+  <div class='span8'>
+  <h3>{{ eventdate.eventdate.format('l, F d Y') }}<small>Status: <span class="badge">{{ eventdate.status }}</span></small></h3>
+  </div>
+</div>
+
+{% endblock %}
