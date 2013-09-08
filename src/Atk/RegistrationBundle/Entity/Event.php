@@ -36,9 +36,13 @@ class Event
     private $description;
 
     /**
-     * @var integer
+     * Many-To-One
      *
-     * @ORM\Column(name="school", type="integer")
+     * @var School $school
+     *
+     * @ORM\ManyToOne(targetEntity="School")
+     * @ORM\JoinColumn(name="school", referencedColumnName="id")
+     * 
      */
     private $school;
 
@@ -62,7 +66,6 @@ class Event
      * @ORM\Column(name="contactEmail", type="string", length=255)
      */
     private $contactEmail;
-
 
     /**
      * Get id
@@ -96,6 +99,8 @@ class Event
     {
         return $this->name;
     }
+
+    public function __toString() { return $this->getName(); }
 
     /**
      * Set description
