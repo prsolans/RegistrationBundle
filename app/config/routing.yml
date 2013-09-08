@@ -1,0 +1,5 @@
+atk_registration:
+    resource: "@AtkRegistrationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
