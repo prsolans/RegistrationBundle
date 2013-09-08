@@ -91,6 +91,9 @@ class EventDate
         return $this->eventdate;
     }
 
+    public function __toString() { return $this->eventdate->format('Y-m-d'); }
+
+
     /**
      * Set event
      *

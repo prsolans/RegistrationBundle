@@ -42,11 +42,15 @@ class Registration
      */
     private $email;
 
-    /**
-     * @var integer
+     /**
+     * Many-To-One
      *
-     * @ORM\Column(name="eventdate", type="integer")
-     */
+     * @var EventDate $eventdate
+     *
+     * @ORM\ManyToOne(targetEntity="EventDate")
+     * @ORM\JoinColumn(name="eventdate", referencedColumnName="id")
+     * 
+     */ 
     private $eventdate;
 
     /**
