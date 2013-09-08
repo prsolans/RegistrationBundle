@@ -28,10 +28,15 @@ class EventDate
      */
     private $eventdate;
 
+
     /**
-     * @var integer
+     * Many-To-One
      *
-     * @ORM\Column(name="event", type="integer")
+     * @var Event $event
+     *
+     * @ORM\ManyToOne(targetEntity="Event")
+     * @ORM\JoinColumn(name="event", referencedColumnName="id")
+     * 
      */
     private $event;
 
@@ -43,12 +48,15 @@ class EventDate
     private $timeIncrement;
 
     /**
-     * @var integer
+     * Many-To-One
      *
-     * @ORM\Column(name="status", type="integer")
-     */
+     * @var DateStatus $status
+     *
+     * @ORM\ManyToOne(targetEntity="DateStatus")
+     * @ORM\JoinColumn(name="status", referencedColumnName="id")
+     * 
+     */ 
     private $status;
-
 
     /**
      * Get id

@@ -100,7 +100,7 @@ class Event
         return $this->name;
     }
 
-    public function __toString() { return $this->getName(); }
+    public function __toString() { return $this->getName()." - ".$this->getSchool(); }
 
     /**
      * Set description
