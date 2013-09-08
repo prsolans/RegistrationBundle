@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+<div class='row'>
+  <div class='span4'>
+    <h1>{{ event.name }} - <a href='{{ path('school', { 'name': event.school }) }}'>{{ event.school }}</a></h1>
+
+    <p>{{ event.description }}</p>
+
+  </div>
+  <div class='span6'>
+    <p><b>Location:</b> {{ event.location }}</p>
+
+    <p><b>Contact:</b> <a href='mailto:{{ event.contactEmail }}?subject={{ event.name }} - {{ event.school }}'>{{ event.contactName}}</a></p>
+  </div>
+</div>
+
+{% endblock %}

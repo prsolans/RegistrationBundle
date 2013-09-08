@@ -18,14 +18,14 @@ use Atk\RegistrationBundle\Form\SchoolFilterType;
 /**
  * School controller.
  *
- * @Route("/admin/school")
+ * @Route("")
  */
 class SchoolController extends Controller
 {
     /**
      * Lists all School entities.
      *
-     * @Route("/", name="admin_school")
+     * @Route("/admin/school/", name="admin_school")
      * @Method("GET")
      * @Template()
      */
@@ -118,7 +118,7 @@ class SchoolController extends Controller
     /**
      * Creates a new School entity.
      *
-     * @Route("/", name="admin_school_create")
+     * @Route("/admin/school/", name="admin_school_create")
      * @Method("POST")
      * @Template("AtkRegistrationBundle:School:new.html.twig")
      */
@@ -146,7 +146,7 @@ class SchoolController extends Controller
     /**
      * Displays a form to create a new School entity.
      *
-     * @Route("/new", name="admin_school_new")
+     * @Route("/admin/school/new", name="admin_school_new")
      * @Method("GET")
      * @Template()
      */
@@ -164,7 +164,7 @@ class SchoolController extends Controller
     /**
      * Finds and displays a School entity.
      *
-     * @Route("/{id}", name="admin_school_show")
+     * @Route("/admin/school/{id}", name="admin_school_show")
      * @Method("GET")
      * @Template()
      */
@@ -189,7 +189,7 @@ class SchoolController extends Controller
     /**
      * Displays a form to edit an existing School entity.
      *
-     * @Route("/{id}/edit", name="admin_school_edit")
+     * @Route("/admin/school/{id}/edit", name="admin_school_edit")
      * @Method("GET")
      * @Template()
      */
@@ -216,7 +216,7 @@ class SchoolController extends Controller
     /**
      * Edits an existing School entity.
      *
-     * @Route("/{id}", name="admin_school_update")
+     * @Route("/admin/school/{id}", name="admin_school_update")
      * @Method("PUT")
      * @Template("AtkRegistrationBundle:School:edit.html.twig")
      */
@@ -254,7 +254,7 @@ class SchoolController extends Controller
     /**
      * Deletes a School entity.
      *
-     * @Route("/{id}", name="admin_school_delete")
+     * @Route("/admin/school/{id}", name="admin_school_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -293,5 +293,48 @@ class SchoolController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }  
+
+    /**
+     * Display all events at a given School.
+     *
+     * @Route("/school/{name}", name="school")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getSchoolEventAction($name)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $thisSchool = $em->getRepository('AtkRegistrationBundle:School')->findOneByName($name);
+        $schoolId = $thisSchool->getId();
+
+        $events = $em->getRepository('AtkRegistrationBundle:Event')->findById($schoolId);
+
+        if (!$thisSchool) {
+            throw $this->createNotFoundException('Unable to find School entity.');
+        }
+   
+        return $this->render('AtkRegistrationBundle:School:school.html.twig', array('school' => $thisSchool, 'events' => $events));
+    }
+
+    /**
+     * Display all events at a given School.
+     *
+     * @Route("/school", name="allschools")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getSchoolsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $schools = $em->getRepository('AtkRegistrationBundle:School')->findAll();
+       
+        if (!$schools) {
+            throw $this->createNotFoundException('Unable to find School entity.');
+        }
+   
+        return $this->render('AtkRegistrationBundle:School:allschools.html.twig', array('schools' => $schools));
     }
 }

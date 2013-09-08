@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <div class="row">
+      <div class="span2">
+          <h1>All Schools</h1>
+      </div>
+      <div class="span6">
+          <ul>
+              {% for school in schools %}
+                  <li><a href='school/{{ school.name }}'>{{ school.name }}</a></li>
+              {% endfor %}
+          </ul>
+      </div>
+    </div>
+{% endblock %}

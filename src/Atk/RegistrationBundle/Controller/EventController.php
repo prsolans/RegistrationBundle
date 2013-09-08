@@ -18,14 +18,14 @@ use Atk\RegistrationBundle\Form\EventFilterType;
 /**
  * Event controller.
  *
- * @Route("/admin/event")
+ * @Route("")
  */
 class EventController extends Controller
 {
     /**
      * Lists all Event entities.
      *
-     * @Route("/", name="admin_event")
+     * @Route("/admin/event", name="admin_event")
      * @Method("GET")
      * @Template()
      */
@@ -164,7 +164,7 @@ class EventController extends Controller
     /**
      * Finds and displays a Event entity.
      *
-     * @Route("/{id}", name="admin_event_show")
+     * @Route("/admin/event/{id}", name="admin_event_show")
      * @Method("GET")
      * @Template()
      */
@@ -189,7 +189,7 @@ class EventController extends Controller
     /**
      * Displays a form to edit an existing Event entity.
      *
-     * @Route("/{id}/edit", name="admin_event_edit")
+     * @Route("/admin/event/{id}/edit", name="admin_event_edit")
      * @Method("GET")
      * @Template()
      */
@@ -216,7 +216,7 @@ class EventController extends Controller
     /**
      * Edits an existing Event entity.
      *
-     * @Route("/{id}", name="admin_event_update")
+     * @Route("/admin/event/{id}", name="admin_event_update")
      * @Method("PUT")
      * @Template("AtkRegistrationBundle:Event:edit.html.twig")
      */
@@ -254,7 +254,7 @@ class EventController extends Controller
     /**
      * Deletes a Event entity.
      *
-     * @Route("/{id}", name="admin_event_delete")
+     * @Route("/admin/event/{id}", name="admin_event_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -293,5 +293,25 @@ class EventController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Display all Event records.
+     *
+     * @Route("/event/{id}", name="event")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $thisEvent = $em->getRepository('AtkRegistrationBundle:Event')->findOneById($id);
+      
+        if (!$thisEvent) {
+            throw $this->createNotFoundException('Unable to find Event entity.');
+        }
+   
+        return $this->render('AtkRegistrationBundle:Event:event.html.twig', array('event' => $thisEvent));
     }
 }
