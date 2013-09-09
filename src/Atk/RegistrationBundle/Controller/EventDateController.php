@@ -15,6 +15,8 @@ use Atk\RegistrationBundle\Entity\EventDate;
 use Atk\RegistrationBundle\Form\EventDateType;
 use Atk\RegistrationBundle\Form\EventDateFilterType;
 
+use Atk\RegistrationBundle\Entity\Registration;
+use Atk\RegistrationBundle\Form\RegistrationType;
 /**
  * EventDate controller.
  *
@@ -309,14 +311,17 @@ class EventDateController extends Controller
         $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($id);
         $eventDateId = $thisEventDate->getId();
 
-        $registrations = $em->getRepository('AtkRegistrationBundle:Registration')->findById($eventDateId);
+        $registrations = $em->getRepository('AtkRegistrationBundle:Registration')->findBy(array('eventdate' => $eventDateId));
 
+        $entity  = new Registration();
+        $form = $this->createForm(new RegistrationType(), $entity);
+     //   $form->add('save', 'submit');
       
         if (!$thisEventDate) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
    
-        return $this->render('AtkRegistrationBundle:EventDate:eventdate.html.twig', array('eventdate' => $thisEventDate, 'registrations' => $registrations));
+        return $this->render('AtkRegistrationBundle:EventDate:eventdate.html.twig', array('eventdate' => $thisEventDate, 'registrations' => $registrations, 'form' => $form->createView()));
     }
 
     /**
