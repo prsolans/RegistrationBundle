@@ -1,5 +1,10 @@
+
+{% extends '::base.html.twig' %}
+{% block content %}
 <p>
 {{ eventdate.event.name }}
 <p>
-{{ eventdate.eventdate.format('l, F m Y') }}
+{{ eventdate.eventdate.format('l, F d Y') }}
 <p>Thanks for signing up!</p>
+
+{% endblock %}

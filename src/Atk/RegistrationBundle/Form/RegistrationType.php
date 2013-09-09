@@ -11,15 +11,15 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname')
-            ->add('lastname')
-            ->add('email')
-            ->add('eventdate')
-            ->add('timeslot')
-            ->add('add1')
-            ->add('add2')
-            ->add('add3')
-            ->add('add4')
+            ->add('firstname', null, array('label'  => 'First Name: '))
+            ->add('lastname', null, array('label'  => 'Last Name: '))
+            ->add('email', null, array('label'  => 'Email: '))
+            ->add('eventdate', null, array('label'  => 'Date: '))
+            ->add('timeslot', null, array('label'  => 'Time Name: '))
+            ->add('add1', null, array('label'  => 'Info 1: '))
+            ->add('add2', null, array('label'  => 'Info 2: '))
+            ->add('add3', null, array('label'  => 'Info 3: '))
+            ->add('add4', null, array('label'  => 'Info 4: '))
         ;
     }
 

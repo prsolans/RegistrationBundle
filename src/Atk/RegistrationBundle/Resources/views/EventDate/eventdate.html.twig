@@ -7,17 +7,22 @@
     <p><a href='{{ path('event', { 'id': eventdate.event.id }) }}'>See all dates at this event</a></p>
          </div>
   <div class='span8'>
-  <h3>{{ eventdate.eventdate.format('l, F d Y') }}<br/><small>{{ eventdate.event.location }}</small></h3><br/>Status: <span class="badge">{{ eventdate.status }}</span> (<a href='{{ path('form_registration', {'eventdate': eventdate.id}) }}'>go to form</a>)
+  <h2>Event Date Details 
+  <br/><small><a href='{{ path('admin_eventdate_edit', { 'id': eventdate.id }) }}'><i class='icon-edit' title='Edit'></i> Edit</a> | 
+  <a target='_blank' href='{{ path('form_registration', {'eventdate': eventdate.id}) }}'><i class="icon-external-link"></i> Go to form</a></small></h2>
+  <h3>{{ eventdate.eventdate.format('l, F d Y') }}</h3>
+
+  <p>Status: <span class="badge">{{ eventdate.status }}</span> 
 
   <h4>Registrants</h4>
   <table class='table'>
   <tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Timeslot</th><th>Actions</th></tr>
   {% for item in registrations %}
-      <tr><td>{{ item.firstname }}</td><td>{{ item.lastname }}</td><td>{{ item.email }}</td><td>{{ item.timeslot }}</td><td><a href='{{ path('admin_registration_delete', { 'id': eventdate.event.id }) }}'><button class="btn-small btn-primary" type="submit">Edit</button></a></td></tr>
+      <tr><td>{{ item.firstname }}</td><td>{{ item.lastname }}</td><td>{{ item.email }}</td><td>{{ item.timeslot }}</td><td><a href='{{ path('admin_registration_edit', { 'id': item.id }) }}'><i class='icon-edit' title='Edit'></i></a></td></tr>
   {% endfor %}
   </table>
   <div class='row'>
-  <div class='span6'>
+  <div class='span12'>
   <form class="well" action="{{ path('admin_registration_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>

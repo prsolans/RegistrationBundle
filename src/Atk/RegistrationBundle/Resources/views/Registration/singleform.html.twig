@@ -1,12 +1,31 @@
 
- <h1>{{ eventdate.event.school.name }}<br/><small>{{ eventdate.event.name }}</small></h1>
+{% extends '::base.html.twig' %}
+{% block content %}
+
+{% form_theme form 'AtkRegistrationBundle:Form:field.html.twig' %}
+
+<h1>{{ eventdate.event.school.name }}<br/><small>{{ eventdate.event.name }}</small></h1>
  <p>{{ eventdate.event.description }}</p>
      <h3>{{ eventdate.eventdate.format('l, F d Y') }}<br/><small>{{ eventdate.event.location }}</small></h3>
 
 
-<form class="well" action="{{ path('user_registration_create', { 'eventdate': eventdate.id }) }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
+{% if eventdate.status == 'Live' %}
+<form class="form-inline" action="{{ path('user_registration_create', { 'eventdate': eventdate.id }) }}" method="post" {{ form_enctype(form) }}>
+  <fieldset>
+    <legend>Register</legend>
+    {#
+    {{ form_label(form.firstname) }}    {{ form_widget(form.firstname) }}
+    #}
+
+    {{ form(form) }}
     <p>
-        <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        <button type="submit" class="btn btn-success">Register</button>
     </p>
 </form>
+{% else %}
+Please check back soon to register.
+{% endif %}
+<p>For more information, please contact <a href='mailto:{{ eventdate.event.contactEmail }}'>{{ eventdate.event.contactName }}</a>.</p>
+
+
+{% endblock %}

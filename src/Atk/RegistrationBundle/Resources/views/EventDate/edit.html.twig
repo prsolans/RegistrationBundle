@@ -6,7 +6,8 @@
 
 {% block page %}
 
-<h1>{{ 'views.edit.edit'|trans({'%entity%': 'EventDate'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+<h1>{{ 'views.edit.edit'|trans({'%entity%': 'Event Date'}, 'JordiLlonchCrudGeneratorBundle') }}
+<small><a href='{{ path('eventdate', {'id': entity.id}) }}'><i class="icon-external-link"></i> Return to form details</a></h1>
 
 <form class="well" action="{{ path('admin_eventdate_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     <input type="hidden" name="_method" value="PUT" />

@@ -295,7 +295,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * Display form at a given EventDate.
+     * Display form for a given EventDate.
      *
      * @Route("/registration/{eventdate}", name="form_registration")
      * @Method("GET")
@@ -308,7 +308,8 @@ class RegistrationController extends Controller
 
         $entity  = new Registration();
         $form = $this->createForm(new RegistrationType(), $entity);
-   
+        $form->add('eventdate', null, array('label' => 'Date: ', 'choices' => array('eventdate' => $thisEventDate)));
+
         return $this->render('AtkRegistrationBundle:Registration:singleform.html.twig', array('eventdate' => $thisEventDate, 'form' => $form->createView()));
     }
 
@@ -336,20 +337,18 @@ class RegistrationController extends Controller
      */
     public function userCreateAction(Request $request, $eventdate)
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($eventdate);
+        
         $entity  = new Registration();
         $form = $this->createForm(new RegistrationType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($eventdate);
-            $logger = $this->get('logger');
-            $logger->info('============PRS==================='.$thisEventDate->getId());
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
-                        $logger->info('============PRS2==================='.$thisEventDate->getId());
-
 
             return $this->redirect($this->generateUrl('form_registration_success', array('eventdate' => $thisEventDate->getId())));
         }
