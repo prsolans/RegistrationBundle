@@ -307,12 +307,16 @@ class EventDateController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($id);
+        $eventDateId = $thisEventDate->getId();
+
+        $registrations = $em->getRepository('AtkRegistrationBundle:Registration')->findById($eventDateId);
+
       
         if (!$thisEventDate) {
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
    
-        return $this->render('AtkRegistrationBundle:EventDate:eventdate.html.twig', array('eventdate' => $thisEventDate));
+        return $this->render('AtkRegistrationBundle:EventDate:eventdate.html.twig', array('eventdate' => $thisEventDate, 'registrations' => $registrations));
     }
 
     /**

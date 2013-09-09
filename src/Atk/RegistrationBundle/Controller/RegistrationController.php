@@ -18,14 +18,14 @@ use Atk\RegistrationBundle\Form\RegistrationFilterType;
 /**
  * Registration controller.
  *
- * @Route("/admin/registration")
+ * @Route("")
  */
 class RegistrationController extends Controller
 {
     /**
      * Lists all Registration entities.
      *
-     * @Route("/", name="admin_registration")
+     * @Route("/admin/registration/", name="admin_registration")
      * @Method("GET")
      * @Template()
      */
@@ -118,7 +118,7 @@ class RegistrationController extends Controller
     /**
      * Creates a new Registration entity.
      *
-     * @Route("/", name="admin_registration_create")
+     * @Route("/admin/registration/", name="admin_registration_create")
      * @Method("POST")
      * @Template("AtkRegistrationBundle:Registration:new.html.twig")
      */
@@ -146,7 +146,7 @@ class RegistrationController extends Controller
     /**
      * Displays a form to create a new Registration entity.
      *
-     * @Route("/new", name="admin_registration_new")
+     * @Route("/admin/registration/new", name="admin_registration_new")
      * @Method("GET")
      * @Template()
      */
@@ -164,7 +164,7 @@ class RegistrationController extends Controller
     /**
      * Finds and displays a Registration entity.
      *
-     * @Route("/{id}", name="admin_registration_show")
+     * @Route("/admin/registration/{id}", name="admin_registration_show")
      * @Method("GET")
      * @Template()
      */
@@ -189,7 +189,7 @@ class RegistrationController extends Controller
     /**
      * Displays a form to edit an existing Registration entity.
      *
-     * @Route("/{id}/edit", name="admin_registration_edit")
+     * @Route("/admin/registration/{id}/edit", name="admin_registration_edit")
      * @Method("GET")
      * @Template()
      */
@@ -216,7 +216,7 @@ class RegistrationController extends Controller
     /**
      * Edits an existing Registration entity.
      *
-     * @Route("/{id}", name="admin_registration_update")
+     * @Route("/admin/registration/{id}", name="admin_registration_update")
      * @Method("PUT")
      * @Template("AtkRegistrationBundle:Registration:edit.html.twig")
      */
@@ -254,7 +254,7 @@ class RegistrationController extends Controller
     /**
      * Deletes a Registration entity.
      *
-     * @Route("/{id}", name="admin_registration_delete")
+     * @Route("/admin/registration/{id}", name="admin_registration_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

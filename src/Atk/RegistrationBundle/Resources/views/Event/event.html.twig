@@ -12,14 +12,20 @@
 
     <p><b>Location:</b> {{ event.location }}</p>
 
-    <p><b>Contact:</b> <a href='mailto:{{ event.contactEmail }}?subject={{ event.name }} - {{ event.school }}'>{{ event.contactName}}</a></p>
+    <p><b>Contact:</b> <a href='mailto:{{ event.contactEmail }}?subject={{ event.name }} - {{ event.school }}'>{{ event.contactName }}</a></p>
+
+    <p>
+      <a href='{{ path('admin_eventdate_new') }}'><button class="btn btn-small btn-success" type="button">Add a new date</button></a>
+    </p>
 
     <h4>Dates</h4>
-    <ul>
+    
+    <table class='table'>
+    <tr><th>Date</th><th>Status</th><th>Actions</th></tr>
     {% for date in eventDates %}
-        <li><a href='{{ path('eventdate', { 'id': date.id }) }}'>{{ date.eventdate.format('l, F d Y') }}</a></li>
+        <tr><td><a href='{{ path('eventdate', { 'id': date.id }) }}'>{{ date.eventdate.format('l, F d Y') }}</a></td><td><span class='label'>{{ date.status }}</span></td><td><a href='{{ path('admin_eventdate_edit', { 'id': date.id }) }}'><button class="btn btn-small btn-primary" type="button">Edit</button></a></td></tr>
     {% endfor %}
-    </ul>
+    </table>
 
   </div>
 </div>

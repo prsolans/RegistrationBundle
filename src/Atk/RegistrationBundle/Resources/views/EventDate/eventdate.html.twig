@@ -6,8 +6,24 @@
     <p><a href='{{ path('event', { 'id': eventdate.event.id }) }}'>See all dates at this event</a></p>
          </div>
   <div class='span8'>
-  <h3>{{ eventdate.eventdate.format('l, F d Y') }}<small>Status: <span class="badge">{{ eventdate.status }}</span></small></h3>
+  <h3>{{ eventdate.eventdate.format('l, F d Y') }}<br/><small>{{ eventdate.event.location }}</small></h3><br/>Status: <span class="badge">{{ eventdate.status }}</span> 
+
+  <h4>Registrants</h4>
+  <table class='table'>
+  <tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Timeslot</th><th>Actions</th></tr>
+  {% for item in registrations %}
+      <tr><td>{{ item.firstname }}</td><td>{{ item.lastname }}</td><td>{{ item.email }}</td><td>{{ item.timeslot }}</td><td><a href='{{ path('admin_registration_delete', { 'id': eventdate.event.id }) }}'><button class="btn-small btn-primary" type="submit">Edit</button></a></td></tr>
+  {% endfor %}
+  </table>
+  <div class='row'>
+  <div class='span6'>
+  {#
+  {% render controller("AtkRegistrationBundle:Registration:new", {'id': eventdate.id})  %}
+  #}
+  </div>
+  </div>
   </div>
 </div>
+
 
 {% endblock %}

@@ -332,7 +332,7 @@ class EventController extends Controller
         $thisEvent = $em->getRepository('AtkRegistrationBundle:Event')->findOneById($id);
         $eventId = $thisEvent->getId();
 
-        $eventDates = $em->getRepository('AtkRegistrationBundle:EventDate')->findByEvent($eventId);
+        $eventDates = $em->getRepository('AtkRegistrationBundle:EventDate')->findBy(array('event' => $eventId), array('eventdate' => 'ASC'));
       
         if (!$thisEvent) {
             throw $this->createNotFoundException('Unable to find Event entity.');
