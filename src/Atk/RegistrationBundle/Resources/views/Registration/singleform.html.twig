@@ -1,0 +1,12 @@
+
+ <h1>{{ eventdate.event.school.name }}<br/><small>{{ eventdate.event.name }}</small></h1>
+ <p>{{ eventdate.event.description }}</p>
+     <h3>{{ eventdate.eventdate.format('l, F d Y') }}<br/><small>{{ eventdate.event.location }}</small></h3>
+
+
+<form class="well" action="{{ path('user_registration_create', { 'eventdate': eventdate.id }) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+    </p>
+</form>

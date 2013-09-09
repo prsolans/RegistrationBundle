@@ -133,8 +133,7 @@ class RegistrationController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
-
-            return $this->redirect($this->generateUrl('admin_registration_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_registration_show', array('id' => $entity->getId())));   
         }
 
         return array(
@@ -293,5 +292,71 @@ class RegistrationController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    /**
+     * Display form at a given EventDate.
+     *
+     * @Route("/registration/{eventdate}", name="form_registration")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getEventDateFormAction($eventdate)
+    {      
+        $em = $this->getDoctrine()->getManager();
+        $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($eventdate);
+
+        $entity  = new Registration();
+        $form = $this->createForm(new RegistrationType(), $entity);
+   
+        return $this->render('AtkRegistrationBundle:Registration:singleform.html.twig', array('eventdate' => $thisEventDate, 'form' => $form->createView()));
+    }
+
+    /**
+     * Display success at a given EventDate.
+     *
+     * @Route("/registration/success/{eventdate}", name="form_registration_success")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getEventDateFormSuccessAction($eventdate)
+    {      
+        $em = $this->getDoctrine()->getManager();
+        $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($eventdate);
+   
+        return $this->render('AtkRegistrationBundle:Registration:singleform_success.html.twig', array('eventdate' => $thisEventDate));
+    }
+
+    /**
+     * User created a new Registration entity.
+     *
+     * @Route("/registration/create/{eventdate}", name="user_registration_create")
+     * @Method("POST")
+     * @Template("AtkRegistrationBundle:Registration:new.html.twig")
+     */
+    public function userCreateAction(Request $request, $eventdate)
+    {
+        $entity  = new Registration();
+        $form = $this->createForm(new RegistrationType(), $entity);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $thisEventDate = $em->getRepository('AtkRegistrationBundle:EventDate')->findOneById($eventdate);
+            $logger = $this->get('logger');
+            $logger->info('============PRS==================='.$thisEventDate->getId());
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
+                        $logger->info('============PRS2==================='.$thisEventDate->getId());
+
+
+            return $this->redirect($this->generateUrl('form_registration_success', array('eventdate' => $thisEventDate->getId())));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
     }
 }

@@ -7,7 +7,7 @@
     <p><a href='{{ path('event', { 'id': eventdate.event.id }) }}'>See all dates at this event</a></p>
          </div>
   <div class='span8'>
-  <h3>{{ eventdate.eventdate.format('l, F d Y') }}<br/><small>{{ eventdate.event.location }}</small></h3><br/>Status: <span class="badge">{{ eventdate.status }}</span> 
+  <h3>{{ eventdate.eventdate.format('l, F d Y') }}<br/><small>{{ eventdate.event.location }}</small></h3><br/>Status: <span class="badge">{{ eventdate.status }}</span> (<a href='{{ path('form_registration', {'eventdate': eventdate.id}) }}'>go to form</a>)
 
   <h4>Registrants</h4>
   <table class='table'>
